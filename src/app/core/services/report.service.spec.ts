@@ -60,10 +60,10 @@ describe('ReportService', () => {
     service = TestBed.inject(ReportService);
   });
 
-  it('marks exported documents as fictional portfolio data', () => {
+  it('marks exported documents as fictional demo data', () => {
     const doc = service.buildDocDefinition(CALCULATION);
     expect(JSON.stringify(doc)).toContain('dados fictícios');
-    expect(JSON.stringify(doc.footer)).toContain('não usar para decisões técnicas');
+    expect(JSON.stringify(doc.footer)).toContain('Demo — dados fictícios.');
   });
 
   describe('native report lifecycle', () => {

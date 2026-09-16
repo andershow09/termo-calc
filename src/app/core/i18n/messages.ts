@@ -16,7 +16,7 @@ export interface FieldHint {
 
 export const APP = {
   name: 'TermoCalc Demo',
-  tagline: 'PORTFÓLIO — dados fictícios, sem validade técnica',
+  tagline: 'Cálculo de fluxo de calor em ambientes refrigerados',
 };
 
 export const COMMON = {
@@ -29,12 +29,21 @@ export const COMMON = {
 };
 
 export const PREMIUM = {
-  productTitle: 'Demonstração', productDescription: 'Recursos de portfólio', productPrice: 'Sem cobrança',
-  paywallHeader: 'Demonstração', paywallCta: 'Ver configurações', activeBadge: 'DEMO',
-  subscribe: 'Demonstrar', restore: 'Reiniciar demonstração', benefits: 'Recursos demonstrativos disponíveis.',
-  storeNote: 'Sem integração com lojas.', subscribeSuccess: 'Demonstração disponível.',
-  subscribeIncomplete: 'Ação demonstrativa.', subscribeError: 'Não foi possível concluir a demonstração.',
-  restoreSuccess: 'Demonstração disponível.', restoreEmpty: 'Sem compras nesta edição.',
+  productTitle: 'Demonstração',
+  productDescription: 'Recursos de demonstração',
+  productPrice: 'Sem cobrança',
+  paywallHeader: 'Demonstração',
+  paywallCta: 'Ver configurações',
+  activeBadge: 'DEMO',
+  subscribe: 'Demonstrar',
+  restore: 'Reiniciar demonstração',
+  benefits: 'Recursos demonstrativos disponíveis.',
+  storeNote: 'Sem integração com lojas.',
+  subscribeSuccess: 'Demonstração disponível.',
+  subscribeIncomplete: 'Ação demonstrativa.',
+  subscribeError: 'Não foi possível concluir a demonstração.',
+  restoreSuccess: 'Demonstração disponível.',
+  restoreEmpty: 'Sem compras nesta edição.',
   restoreError: 'Não foi possível concluir a demonstração.',
 };
 
@@ -56,7 +65,10 @@ export const LOCATION = {
 
 export const RESULTS = {
   defaultTitle: 'Cálculo TermoCalc',
-  saveLimit: (limit: number): string => { void limit; return 'Edição demonstrativa.'; },
+  saveLimit: (limit: number): string => {
+    void limit;
+    return 'Edição demonstrativa.';
+  },
   reportsPremium: 'Relatórios demonstrativos.',
   saveDataUnavailable:
     'Não foi possível salvar: os dados do cálculo não estão disponíveis.',
@@ -83,16 +95,100 @@ export const REPORT_PDF = {
 };
 
 export const HOME_HINTS: Record<string, FieldHint> = {
-  temperaturaInf: { title: 'Temperatura de infiltração', description: 'Campo ilustrativo da interface.', unit: '', guidance: 'Nesta demonstração, alterar entradas não altera os resultados fictícios.', example: 'Use valores fictícios.' },
-  umidadeInf: { title: 'Umidade de infiltração', description: 'Campo ilustrativo da interface.', unit: '', guidance: 'Nesta demonstração, alterar entradas não altera os resultados fictícios.', example: 'Use valores fictícios.' },
-  temperaturaRef: { title: 'Temperatura refrigerada', description: 'Campo ilustrativo da interface.', unit: '', guidance: 'Nesta demonstração, alterar entradas não altera os resultados fictícios.', example: 'Use valores fictícios.' },
-  umidadeRef: { title: 'Umidade refrigerada', description: 'Campo ilustrativo da interface.', unit: '', guidance: 'Nesta demonstração, alterar entradas não altera os resultados fictícios.', example: 'Use valores fictícios.' },
-  larguraAbert: { title: 'Largura da abertura', description: 'Campo ilustrativo da interface.', unit: '', guidance: 'Nesta demonstração, alterar entradas não altera os resultados fictícios.', example: 'Use valores fictícios.' },
-  alturaAbert: { title: 'Altura da abertura', description: 'Campo ilustrativo da interface.', unit: '', guidance: 'Nesta demonstração, alterar entradas não altera os resultados fictícios.', example: 'Use valores fictícios.' },
-  tempoAbert: { title: 'Tempo de abertura', description: 'Campo ilustrativo da interface.', unit: '', guidance: 'Nesta demonstração, alterar entradas não altera os resultados fictícios.', example: 'Use valores fictícios.' },
-  cop: { title: 'COP da sala de máquinas', description: 'Campo ilustrativo da interface.', unit: '', guidance: 'Nesta demonstração, alterar entradas não altera os resultados fictícios.', example: 'Use valores fictícios.' },
-  custoKw: { title: 'Custo de energia', description: 'Campo ilustrativo da interface.', unit: '', guidance: 'Nesta demonstração, alterar entradas não altera os resultados fictícios.', example: 'Use valores fictícios.' },
-  eficienciaCort: { title: 'Eficiência das cortinas', description: 'Campo ilustrativo da interface.', unit: '', guidance: 'Nesta demonstração, alterar entradas não altera os resultados fictícios.', example: 'Use valores fictícios.' },
-  acelaracaoGravitacional: { title: 'Aceleração gravitacional', description: 'Campo ilustrativo da interface.', unit: '', guidance: 'Nesta demonstração, alterar entradas não altera os resultados fictícios.', example: 'Use valores fictícios.' },
-  altitude: { title: 'Altitude', description: 'Campo ilustrativo da interface.', unit: '', guidance: 'Nesta demonstração, alterar entradas não altera os resultados fictícios.', example: 'Use valores fictícios.' },
+  temperaturaInf: {
+    title: 'Temperatura de infiltração',
+    description: 'Campo ilustrativo da interface.',
+    unit: '',
+    guidance:
+      'Nesta demonstração, alterar entradas não altera os resultados fictícios.',
+    example: 'Use valores fictícios.',
+  },
+  umidadeInf: {
+    title: 'Umidade de infiltração',
+    description: 'Campo ilustrativo da interface.',
+    unit: '',
+    guidance:
+      'Nesta demonstração, alterar entradas não altera os resultados fictícios.',
+    example: 'Use valores fictícios.',
+  },
+  temperaturaRef: {
+    title: 'Temperatura refrigerada',
+    description: 'Campo ilustrativo da interface.',
+    unit: '',
+    guidance:
+      'Nesta demonstração, alterar entradas não altera os resultados fictícios.',
+    example: 'Use valores fictícios.',
+  },
+  umidadeRef: {
+    title: 'Umidade refrigerada',
+    description: 'Campo ilustrativo da interface.',
+    unit: '',
+    guidance:
+      'Nesta demonstração, alterar entradas não altera os resultados fictícios.',
+    example: 'Use valores fictícios.',
+  },
+  larguraAbert: {
+    title: 'Largura da abertura',
+    description: 'Campo ilustrativo da interface.',
+    unit: '',
+    guidance:
+      'Nesta demonstração, alterar entradas não altera os resultados fictícios.',
+    example: 'Use valores fictícios.',
+  },
+  alturaAbert: {
+    title: 'Altura da abertura',
+    description: 'Campo ilustrativo da interface.',
+    unit: '',
+    guidance:
+      'Nesta demonstração, alterar entradas não altera os resultados fictícios.',
+    example: 'Use valores fictícios.',
+  },
+  tempoAbert: {
+    title: 'Tempo de abertura',
+    description: 'Campo ilustrativo da interface.',
+    unit: '',
+    guidance:
+      'Nesta demonstração, alterar entradas não altera os resultados fictícios.',
+    example: 'Use valores fictícios.',
+  },
+  cop: {
+    title: 'COP da sala de máquinas',
+    description: 'Campo ilustrativo da interface.',
+    unit: '',
+    guidance:
+      'Nesta demonstração, alterar entradas não altera os resultados fictícios.',
+    example: 'Use valores fictícios.',
+  },
+  custoKw: {
+    title: 'Custo de energia',
+    description: 'Campo ilustrativo da interface.',
+    unit: '',
+    guidance:
+      'Nesta demonstração, alterar entradas não altera os resultados fictícios.',
+    example: 'Use valores fictícios.',
+  },
+  eficienciaCort: {
+    title: 'Eficiência das cortinas',
+    description: 'Campo ilustrativo da interface.',
+    unit: '',
+    guidance:
+      'Nesta demonstração, alterar entradas não altera os resultados fictícios.',
+    example: 'Use valores fictícios.',
+  },
+  acelaracaoGravitacional: {
+    title: 'Aceleração gravitacional',
+    description: 'Campo ilustrativo da interface.',
+    unit: '',
+    guidance:
+      'Nesta demonstração, alterar entradas não altera os resultados fictícios.',
+    example: 'Use valores fictícios.',
+  },
+  altitude: {
+    title: 'Altitude',
+    description: 'Campo ilustrativo da interface.',
+    unit: '',
+    guidance:
+      'Nesta demonstração, alterar entradas não altera os resultados fictícios.',
+    example: 'Use valores fictícios.',
+  },
 };

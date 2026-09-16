@@ -1,8 +1,8 @@
-# TermoCalc — Portfólio
+# TermoCalc
 
-Demonstração de uma aplicação mobile com Angular 20, Ionic 8, Capacitor 7 e TypeScript.
+App demo em Angular, Ionic e Capacitor, com resultados de cálculo simulados. Permite explorar formulários, histórico local e relatórios PDF.
 
-**Os resultados são fictícios e fixos. Esta edição não contém o motor de cálculo real e não deve ser usada para decisões técnicas.** Alterar as entradas permite explorar o formulário, mas não altera os indicadores demonstrativos.
+[Conheça o aplicativo na Google Play](https://play.google.com/store/apps/details?id=br.com.apdeveloper.thermocalc).
 
 ## O que pode ser explorado
 
@@ -15,7 +15,7 @@ Demonstração de uma aplicação mobile com Angular 20, Ionic 8, Capacitor 7 e 
 
 ## Executar
 
-Use Node.js 22 e npm. Na raiz:
+Com Node.js 22 e npm:
 
 ```sh
 npm ci
@@ -27,23 +27,20 @@ Acesse http://localhost:4200. Preencha os campos com valores fictícios, gere os
 ## Verificar
 
 ```sh
-npm run portfolio:check
 npm run lint
 npm test -- --watch=false --browsers=ChromeHeadless
 npm run build
 ```
 
-## Android demonstrativo
+## Android
 
-Com Android SDK e JDK compatíveis com o projeto:
+Com Android SDK e JDK configurados:
 
 ```sh
 npm run build
 npx cap sync android
 npx cap open android
 ```
-
-O identificador é `com.example.termocalc.portfolio`. Não use credenciais ou assinatura do aplicativo publicado. O projeto não contém configuração de publicação em lojas.
 
 ## Limites e privacidade
 
@@ -52,6 +49,3 @@ O identificador é `com.example.termocalc.portfolio`. Não use credenciais ou as
 - Não há integração de compra; o adaptador de acesso apenas libera a demonstração.
 - Armazenamento local e pasta de PDFs separados da aplicação real.
 - Nenhum banco, PDF de usuário, documento comercial, chave ou histórico privado foi incluído.
-
-Esta cópia deve ser publicada como repositório independente. Não mescle o histórico do aplicativo real: isso tornaria seu conteúdo anterior acessível.
-

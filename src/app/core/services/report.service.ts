@@ -233,7 +233,7 @@ export class ReportService {
         author: APP.name,
       },
       pageMargins: [40, 60, 40, 60],
-      footer: { text: 'DEMONSTRAÇÃO — dados fictícios; não usar para decisões técnicas.', alignment: 'center', fontSize: 9 },
+      footer: { text: 'Demo — dados fictícios.', alignment: 'center', fontSize: 9 },
       content: [
         header,
         {
