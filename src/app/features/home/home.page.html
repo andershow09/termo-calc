@@ -1,0 +1,245 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>TermoCalc</ion-title>
+    <ion-buttons slot="end">
+      <app-options-menu></app-options-menu>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="false">
+  <main class="page-shell">
+    <p class="demo-notice" role="note"><strong>DEMONSTRAÇÃO</strong> · Valores fictícios e fixos, sem validade técnica.</p>
+    <section class="intro" aria-labelledby="page-title">
+      <p class="eyebrow">Calculadora térmica</p>
+      <h1 id="page-title">Fluxo de ar em câmaras refrigeradas</h1>
+      <p class="intro__text">
+        Informe as condições da abertura para estimar a carga térmica e o custo
+        de operação.
+      </p>
+    </section>
+
+    <form [formGroup]="form" (ngSubmit)="calculate()" novalidate>
+      <ion-card class="form-card">
+        <ion-card-header>
+          <ion-card-title>Variáveis de entrada</ion-card-title>
+          <p>Use os valores reais da instalação para obter uma estimativa precisa.</p>
+        </ion-card-header>
+
+        <ion-card-content>
+          <div class="field-grid">
+            <div class="field-group">
+              <ion-item>
+                <ion-button class="sign-button" slot="start" fill="clear" type="button"
+                  [attr.aria-label]="(form.controls.temperaturaInf.value ?? 0) < 0 ? 'Usar temperatura positiva' : 'Usar temperatura negativa'"
+                  (click)="toggleTemperatureSign('temperaturaInf')">
+                  <ion-icon
+                    [name]="(form.controls.temperaturaInf.value ?? 0) < 0 ? 'add-circle-outline' : 'remove-circle-outline'"></ion-icon>
+                </ion-button>
+                <ion-label position="stacked">Temperatura de infiltração (°C)</ion-label>
+                <ion-input formControlName="temperaturaInf" type="number" inputmode="decimal"></ion-input>
+                <ion-button class="hint-button" slot="end" fill="clear" type="button"
+                  aria-label="Ajuda sobre temperatura de infiltração" (click)="toggleHint('temperaturaInf')">
+                  <ion-icon name="help-circle-outline"></ion-icon>
+                </ion-button>
+              </ion-item>
+              <ion-note color="danger"
+                *ngIf="form.controls.temperaturaInf.invalid && form.controls.temperaturaInf.touched">Informe a
+                temperatura.</ion-note>
+            </div>
+
+            <div class="field-group">
+              <ion-item>
+                <ion-icon class="field-leading-icon" slot="start" name="water-outline" aria-hidden="true"></ion-icon>
+                <ion-label position="stacked">Umidade de infiltração (%)</ion-label>
+                <ion-input formControlName="umidadeInf" type="number" inputmode="decimal"></ion-input>
+                <ion-button class="hint-button" slot="end" fill="clear" type="button"
+                  aria-label="Ajuda sobre umidade de infiltração" (click)="toggleHint('umidadeInf')"><ion-icon
+                    name="help-circle-outline"></ion-icon></ion-button>
+              </ion-item>
+              <ion-note color="danger" *ngIf="form.controls.umidadeInf.invalid && form.controls.umidadeInf.touched">Use
+                um valor entre 0 e 100.</ion-note>
+            </div>
+
+            <div class="field-group">
+              <ion-item>
+                <ion-button class="sign-button" slot="start" fill="clear" type="button"
+                  [attr.aria-label]="(form.controls.temperaturaRef.value ?? 0) < 0 ? 'Usar temperatura positiva' : 'Usar temperatura negativa'"
+                  (click)="toggleTemperatureSign('temperaturaRef')">
+                  <ion-icon
+                    [name]="(form.controls.temperaturaRef.value ?? 0) < 0 ? 'add-circle-outline' : 'remove-circle-outline'"></ion-icon>
+                </ion-button>
+                <ion-label position="stacked">Temperatura refrigerada (°C)</ion-label>
+                <ion-input formControlName="temperaturaRef" type="number" inputmode="decimal"></ion-input>
+                <ion-button class="hint-button" slot="end" fill="clear" type="button"
+                  aria-label="Ajuda sobre temperatura refrigerada" (click)="toggleHint('temperaturaRef')"><ion-icon
+                    name="help-circle-outline"></ion-icon></ion-button>
+              </ion-item>
+              <ion-note color="danger"
+                *ngIf="form.controls.temperaturaRef.invalid && form.controls.temperaturaRef.touched">Informe a
+                temperatura.</ion-note>
+            </div>
+
+            <div class="field-group">
+              <ion-item>
+                <ion-icon class="field-leading-icon" slot="start" name="water-outline" aria-hidden="true"></ion-icon>
+                <ion-label position="stacked">Umidade refrigerada (%)</ion-label>
+                <ion-input formControlName="umidadeRef" type="number" inputmode="decimal"></ion-input>
+                <ion-button class="hint-button" slot="end" fill="clear" type="button"
+                  aria-label="Ajuda sobre umidade refrigerada" (click)="toggleHint('umidadeRef')"><ion-icon
+                    name="help-circle-outline"></ion-icon></ion-button>
+              </ion-item>
+              <ion-note color="danger" *ngIf="form.controls.umidadeRef.invalid && form.controls.umidadeRef.touched">Use
+                um valor entre 0 e 100.</ion-note>
+            </div>
+
+            <div class="field-group">
+              <ion-item>
+                <ion-label position="stacked">Largura da abertura (m)</ion-label>
+                <ion-icon class="field-leading-icon" slot="start" name="resize-outline" aria-hidden="true"></ion-icon>
+                <ion-input formControlName="larguraAbert" type="number" inputmode="decimal"></ion-input>
+                <ion-button class="hint-button" slot="end" fill="clear" type="button"
+                  aria-label="Ajuda sobre largura da abertura" (click)="toggleHint('larguraAbert')"><ion-icon
+                    name="help-circle-outline"></ion-icon></ion-button>
+              </ion-item>
+              <ion-note color="danger"
+                *ngIf="form.controls.larguraAbert.invalid && form.controls.larguraAbert.touched">Informe a largura
+                da abertura.</ion-note>
+            </div>
+
+            <div class="field-group">
+              <ion-item>
+                <ion-label position="stacked">Altura da abertura (m)</ion-label>
+                <ion-icon class="field-leading-icon" slot="start" name="resize-outline" aria-hidden="true"></ion-icon>
+                <ion-input formControlName="alturaAbert" type="number" inputmode="decimal"></ion-input>
+                <ion-button class="hint-button" slot="end" fill="clear" type="button"
+                  aria-label="Ajuda sobre altura da abertura" (click)="toggleHint('alturaAbert')"><ion-icon
+                    name="help-circle-outline"></ion-icon></ion-button>
+              </ion-item>
+              <ion-note color="danger"
+                *ngIf="form.controls.alturaAbert.invalid && form.controls.alturaAbert.touched">Informe a altura
+                da abertura.</ion-note>
+            </div>
+
+            <div class="field-group">
+              <ion-item>
+                <ion-label position="stacked">Tempo de abertura por hora (min)</ion-label>
+                <ion-icon class="field-leading-icon" slot="start" name="time-outline" aria-hidden="true"></ion-icon>
+                <ion-input formControlName="tempoAbert" type="number" inputmode="decimal"></ion-input>
+                <ion-button class="hint-button" slot="end" fill="clear" type="button"
+                  aria-label="Ajuda sobre tempo de abertura" (click)="toggleHint('tempoAbert')"><ion-icon
+                    name="help-circle-outline"></ion-icon></ion-button>
+              </ion-item>
+              <ion-note color="danger"
+                *ngIf="form.controls.tempoAbert.invalid && form.controls.tempoAbert.touched">Informe o tempo de
+                abertura (1 a 60 min).</ion-note>
+            </div>
+
+            <div class="field-group">
+              <ion-item>
+                <ion-label position="stacked">COP da sala de máquinas</ion-label>
+                <ion-icon class="field-leading-icon" slot="start" name="speedometer-outline"
+                  aria-hidden="true"></ion-icon>
+                <ion-input formControlName="cop" type="number" inputmode="decimal"></ion-input>
+                <ion-button class="hint-button" slot="end" fill="clear" type="button" aria-label="Ajuda sobre COP"
+                  (click)="toggleHint('cop')"><ion-icon name="help-circle-outline"></ion-icon></ion-button>
+              </ion-item>
+              <ion-note color="danger" *ngIf="form.controls.cop.invalid && form.controls.cop.touched">Informe o
+                COP.</ion-note>
+            </div>
+
+            <div class="field-group">
+              <ion-item>
+                <ion-label position="stacked">Custo de energia (R$/kWh)</ion-label>
+                <ion-icon class="field-leading-icon" slot="start" name="cash-outline" aria-hidden="true"></ion-icon>
+                <ion-input formControlName="custoKw" type="number" inputmode="decimal"></ion-input>
+                <ion-button class="hint-button" slot="end" fill="clear" type="button"
+                  aria-label="Ajuda sobre custo de energia" (click)="toggleHint('custoKw')"><ion-icon
+                    name="help-circle-outline"></ion-icon></ion-button>
+              </ion-item>
+              <ion-note color="danger" *ngIf="form.controls.custoKw.invalid && form.controls.custoKw.touched">Informe
+                o custo de energia.</ion-note>
+            </div>
+
+            <div class="field-group">
+              <ion-item>
+                <ion-label position="stacked">Eficiência das cortinas (%)</ion-label>
+                <ion-icon class="field-leading-icon" slot="start" name="shield-checkmark-outline"
+                  aria-hidden="true"></ion-icon>
+                <ion-input formControlName="eficienciaCort" type="number" inputmode="decimal"></ion-input>
+                <ion-button class="hint-button" slot="end" fill="clear" type="button"
+                  aria-label="Ajuda sobre eficiência das cortinas" (click)="toggleHint('eficienciaCort')"><ion-icon
+                    name="help-circle-outline"></ion-icon></ion-button>
+              </ion-item>
+              <ion-note color="danger"
+                *ngIf="form.controls.eficienciaCort.invalid && form.controls.eficienciaCort.touched">Use um valor
+                entre 0 e 100.</ion-note>
+            </div>
+
+            <div class="field-group">
+              <ion-item>
+                <ion-label position="stacked">Altitude (m)</ion-label>
+                <ion-icon class="field-leading-icon" slot="start" name="trending-up-outline"
+                  aria-hidden="true"></ion-icon>
+                <ion-input formControlName="altitude" type="number" inputmode="decimal"></ion-input>
+                <ion-button class="location-button" slot="end" fill="clear" type="button"
+                  [disabled]="locationStatus === 'loading'" aria-label="Obter altitude pela localização"
+                  (click)="loadAltitude()">
+                  <ion-spinner *ngIf="locationStatus === 'loading'" name="crescent"></ion-spinner>
+                  <ion-icon *ngIf="locationStatus !== 'loading'" name="location-outline"></ion-icon>
+                </ion-button>
+                <ion-button class="hint-button" slot="end" fill="clear" type="button" aria-label="Ajuda sobre altitude"
+                  (click)="toggleHint('altitude')"><ion-icon name="help-circle-outline"></ion-icon></ion-button>
+              </ion-item>
+              <ion-note *ngIf="locationStatus === 'loading'">{{ locationText.loading }}</ion-note>
+              <ion-note color="success" *ngIf="locationStatus === 'success'">{{ locationText.success }}</ion-note>
+              <ion-note color="warning" *ngIf="locationStatus === 'denied'">{{ locationText.denied }}</ion-note>
+              <ion-note color="danger" *ngIf="locationStatus === 'unavailable'">{{ locationText.unavailable
+                }}</ion-note>
+              <ion-note color="danger"
+                *ngIf="locationStatus === 'idle' && form.controls.altitude.invalid && form.controls.altitude.touched">Informe
+                a altitude.</ion-note>
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <ion-button type="button" fill="outline" color="medium" (click)="reset()">
+              <ion-icon slot="start" name="refresh-outline"></ion-icon>
+              Limpar
+            </ion-button>
+            <ion-button type="submit">
+              <ion-icon slot="start" name="calculator-outline"></ion-icon>
+              Calcular fluxo
+            </ion-button>
+          </div>
+        </ion-card-content>
+      </ion-card>
+    </form>
+  </main>
+</ion-content>
+
+<ion-toast [isOpen]="menuMessageVisible" [message]="menuMessage" [duration]="2600"
+  (didDismiss)="menuMessageVisible = false"></ion-toast>
+
+<ion-modal class="hint-modal" [isOpen]="activeHint !== null" (didDismiss)="closeHint()" aria-label="Ajuda do campo">
+  <ng-template>
+    <ion-header class="hint-modal-header">
+      <ion-toolbar>
+        <ion-title>Dicas de uso</ion-title>
+        <ion-icon slot="end" name="bulb-outline" aria-hidden="true"></ion-icon>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content class="hint-modal-content" *ngIf="activeFieldHint as hint">
+      <div class="hint-modal-body">
+        <h1>{{ hint.title }}</h1>
+        <h3>{{ hint.unit }}</h3>
+        <p>{{ hint.description }}</p>
+        <p>{{ hint.guidance }}</p>
+        <p class="hint-modal__example"><strong>{{ hint.example }}</strong></p>
+      </div>
+    </ion-content>
+    <ion-footer class="hint-modal-footer">
+      <ion-button expand="block" color="success" type="button" (click)="closeHint()">OK</ion-button>
+    </ion-footer>
+  </ng-template>
+</ion-modal>

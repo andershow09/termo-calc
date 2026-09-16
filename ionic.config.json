@@ -1,0 +1,7 @@
+{
+  "name": "termocalc-portfolio",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

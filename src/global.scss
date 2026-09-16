@@ -1,0 +1,56 @@
+/*
+ * App Global CSS
+ * ----------------------------------------------------------------------------
+ * Put style rules here that you want to apply globally. These styles are for
+ * the entire app and not just one component. Additionally, this file can be
+ * used as an entry point to import other CSS/Sass files to be included in the
+ * output CSS.
+ * For more information on global stylesheets, visit the documentation:
+ * https://ionicframework.com/docs/layout/global-stylesheets
+ */
+
+/* Core CSS required for Ionic components to work properly */
+@import "@ionic/angular/css/core.css";
+
+/* Basic CSS for apps built with Ionic */
+@import "@ionic/angular/css/normalize.css";
+@import "@ionic/angular/css/structure.css";
+@import "@ionic/angular/css/typography.css";
+@import "@ionic/angular/css/display.css";
+
+/* Optional CSS utils that can be commented out */
+@import "@ionic/angular/css/padding.css";
+@import "@ionic/angular/css/float-elements.css";
+@import "@ionic/angular/css/text-alignment.css";
+@import "@ionic/angular/css/text-transformation.css";
+@import "@ionic/angular/css/flex-utils.css";
+
+/**
+ * Ionic Dark Mode
+ * -----------------------------------------------------
+ * For more info, please see:
+ * https://ionicframework.com/docs/theming/dark-mode
+ */
+
+/* @import "@ionic/angular/css/palettes/dark.always.css"; */
+/* @import "@ionic/angular/css/palettes/dark.class.css"; */
+/* App fixado no tema claro: não importamos a paleta escura do sistema. */
+/* @import '@ionic/angular/css/palettes/dark.system.css'; */
+
+/*
+ * As toolbars usam sempre o fundo escuro da marca, então seus controles precisam
+ * permanecer claros em qualquer esquema de cor. O passo "light" da paleta se
+ * inverte no modo escuro, por isso fixamos uma cor clara em vez de color="light".
+ */
+ion-toolbar {
+  --color: #f7fbf9;
+}
+
+ion-toolbar ion-back-button,
+ion-toolbar ion-button {
+  --color: #f7fbf9;
+  --color-hover: #ffffff;
+  color: #f7fbf9;
+}
+
+.demo-notice { padding: 12px 16px; border-left: 4px solid #996000; background: #fff4d9; color: #624000; border-radius: 4px; font-size: 0.9rem; }

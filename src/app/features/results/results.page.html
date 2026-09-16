@@ -1,0 +1,126 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button fill="clear" type="button" aria-label="Voltar" (click)="edit()">
+        <ion-icon slot="icon-only" name="arrow-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Resultados</ion-title>
+    <ion-buttons slot="end">
+      <app-options-menu></app-options-menu>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <main class="results-page" *ngIf="result as calculation">
+    <p class="demo-notice" role="note"><strong>DEMONSTRAÇÃO</strong> · Valores fictícios e fixos, sem validade técnica.</p>
+    <section class="results-intro" aria-labelledby="results-title">
+      <p class="eyebrow">Estimativa calculada</p>
+      <h1 id="results-title">Fluxo de ar em câmaras refrigeradas</h1>
+      <p>Confira os principais indicadores e edite os dados quando precisar simular outro cenário.</p>
+    </section>
+
+    <section class="results-hero" aria-label="Resumo do cálculo">
+      <article class="results-hero__primary">
+        <span>Fluxo de calor estimado</span>
+        <strong>{{ calculation.fluxoCalorKw | number:'1.2-2' }} kW</strong>
+        <small>{{ calculation.fluxoCaloKcal | number:'1.2-2' }} kcal/h</small>
+      </article>
+      <article class="results-hero__cost">
+        <span>Custo operacional anual</span>
+        <strong>{{ calculation.custoAno | currency:'BRL':'symbol':'1.2-2' }}</strong>
+        <small>estimativa para 12 meses</small>
+      </article>
+    </section>
+
+    <p class="section-label">Indicadores principais</p>
+    <section class="result-grid">
+      <article class="result-card"><span>Área da abertura</span><strong>{{ calculation.areaAbertura | number:'1.2-2' }}
+          m²</strong></article>
+      <article class="result-card"><span>Consumo de energia</span><strong>{{ calculation.consumo | number:'1.2-2' }}
+          kWh</strong></article>
+      <article class="result-card"><span>Fator mássico (FM)</span><strong>{{ calculation.fm | number:'1.2-5' }}</strong>
+      </article>
+    </section>
+
+    <ion-card class="details-card">
+      <ion-card-header><ion-card-title>Dados termodinâmicos</ion-card-title></ion-card-header>
+      <ion-card-content>
+        <dl class="details-list">
+          <div>
+            <dt>Entalpia de infiltração</dt>
+            <dd>{{ calculation.entalpiaInfilt | number:'1.2-5' }} kJ/kg</dd>
+          </div>
+          <div>
+            <dt>Entalpia refrigerada</dt>
+            <dd>{{ calculation.entalpiaRef | number:'1.2-5' }} kJ/kg</dd>
+          </div>
+          <div>
+            <dt>Densidade de infiltração</dt>
+            <dd>{{ calculation.densidadeInfilt | number:'1.2-5' }} kg/m³</dd>
+          </div>
+          <div>
+            <dt>Densidade refrigerada</dt>
+            <dd>{{ calculation.densidadeRef | number:'1.2-5' }} kg/m³</dd>
+          </div>
+        </dl>
+      </ion-card-content>
+    </ion-card>
+
+    <section class="cost-grid" aria-label="Custos operacionais">
+      <article class="cost-card"><span>Custo por hora</span><strong>{{ calculation.custoHora |
+          currency:'BRL':'symbol':'1.2-2' }}</strong></article>
+      <article class="cost-card"><span>Custo por dia</span><strong>{{ calculation.custoDia |
+          currency:'BRL':'symbol':'1.2-2' }}</strong></article>
+      <article class="cost-card"><span>Custo por mês</span><strong>{{ calculation.custoMes |
+          currency:'BRL':'symbol':'1.2-2' }}</strong></article>
+      <article class="cost-card cost-card--highlight"><span>Custo por ano</span><strong>{{ calculation.custoAno |
+          currency:'BRL':'symbol':'1.2-2' }}</strong></article>
+    </section>
+
+    <ion-button class="edit-button" expand="block" (click)="edit()">
+      <ion-icon slot="start" name="create-outline"></ion-icon>
+      Editar dados do cálculo
+    </ion-button>
+    <ion-button class="save-button" expand="block" fill="outline" (click)="openSaveDialog()">
+      <ion-icon slot="start" name="save-outline"></ion-icon>
+      Salvar resultado
+    </ion-button>
+    <ion-button class="report-button" expand="block" fill="outline" [disabled]="generatingReport"
+      (click)="requestReport()">
+      <ion-icon slot="start" [name]="isPremium ? 'document-text-outline' : 'lock-closed-outline'"></ion-icon>
+      {{ generatingReport ? 'Gerando relatório…' : 'Gerar relatório PDF' }}
+    </ion-button>
+  </main>
+
+  <ion-fab slot="fixed" vertical="bottom" horizontal="end">
+    <ion-fab-button aria-label="Ações rápidas">
+      <ion-icon name="ellipsis-vertical-outline"></ion-icon>
+    </ion-fab-button>
+    <ion-fab-list side="top">
+      <ion-fab-button aria-label="Salvar resultado" (click)="openSaveDialog()">
+        <ion-icon name="save-outline"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-button aria-label="Gerar e compartilhar relatório" [disabled]="generatingReport"
+        (click)="requestReport()">
+        <ion-icon [name]="isPremium ? 'share-social-outline' : 'lock-closed-outline'"></ion-icon>
+      </ion-fab-button>
+    </ion-fab-list>
+  </ion-fab>
+</ion-content>
+
+<ion-alert [isOpen]="saveAlertOpen" header="Salvar resultado" message="Informe um título para esta simulação."
+  [inputs]="[{ name: 'title', type: 'text', placeholder: 'Ex.: Câmara principal' }]" [buttons]="saveAlertButtons"
+  (didDismiss)="saveAlertOpen = false"></ion-alert>
+<ion-alert [isOpen]="reportAlertOpen" header="Relatório PDF" message="Informe um título e, se desejar, o responsável."
+  [inputs]="[{ name: 'title', type: 'text', placeholder: 'Título do relatório' }, { name: 'responsavel', type: 'text', placeholder: 'Responsável (opcional)' }]" [buttons]="reportAlertButtons"
+  (didDismiss)="reportAlertOpen = false"></ion-alert>
+<ion-alert [isOpen]="paywallAlertOpen" [header]="paywallHeader" [message]="paywallMessage" [buttons]="paywallButtons"
+  (didDismiss)="paywallAlertOpen = false"></ion-alert>
+<ion-toast [isOpen]="savedMessageVisible" message="Resultado salvo neste dispositivo." [duration]="2200"
+  (didDismiss)="savedMessageVisible = false"></ion-toast>
+<ion-toast [isOpen]="infoMessageVisible" [message]="infoMessage" color="success" [duration]="2600"
+  (didDismiss)="infoMessageVisible = false"></ion-toast>
+<ion-toast [isOpen]="errorMessageVisible" [message]="errorMessage" color="danger" [duration]="3200"
+  (didDismiss)="errorMessageVisible = false"></ion-toast>

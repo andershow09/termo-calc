@@ -1,0 +1,19 @@
+<ion-button class="options-menu__trigger" fill="clear" type="button" aria-label="Abrir opções" (click)="open()">
+  <ion-icon slot="icon-only" name="ellipsis-vertical-outline"></ion-icon>
+</ion-button>
+
+<ion-popover [isOpen]="isOpen" (didDismiss)="isOpen = false" aria-label="Opções do TermoCalc">
+  <ng-template>
+    <ion-list class="options-menu__list" lines="none">
+      @for (item of items; track item.route) {
+      <ion-item button detail="false" (click)="select(item.route)">
+        <ion-icon slot="start" [name]="item.icon" [color]="item.color"></ion-icon>
+        <ion-label>{{ item.label }}</ion-label>
+        @if (item.premium && !isPremium) {
+        <ion-badge slot="end" color="tertiary">PRO</ion-badge>
+        }
+      </ion-item>
+      }
+    </ion-list>
+  </ng-template>
+</ion-popover>

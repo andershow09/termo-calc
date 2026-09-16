@@ -1,0 +1,59 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start"><ion-back-button defaultHref="/home"></ion-back-button></ion-buttons>
+    <ion-title>Relatórios</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <main class="reports-page">
+    <p class="demo-notice" role="note"><strong>DEMONSTRAÇÃO</strong> · Valores fictícios e fixos, sem validade técnica.</p>
+    <p class="eyebrow">Documentos locais</p>
+    <h1>Relatórios</h1>
+    <p class="intro">Relatórios em PDF gerados a partir dos seus cálculos. Toque no arquivo para abri-lo.
+    </p>
+
+    <div class="empty-state" *ngIf="!isNative">
+      <ion-icon name="document-text-outline"></ion-icon>
+      <h2>Disponível no aplicativo</h2>
+      <p>A lista de relatórios em PDF fica disponível no app instalado no dispositivo.</p>
+    </div>
+
+    <div class="empty-state" *ngIf="isNative && !loading && files.length === 0">
+      <ion-icon name="document-text-outline"></ion-icon>
+      <h2>Nenhum relatório em PDF</h2>
+      <p>Gere um relatório a partir de um cálculo para vê-lo aqui.</p>
+    </div>
+
+    <ion-list class="pdf-list" *ngIf="isNative && files.length > 0" lines="full">
+      <ion-item button detail="false" *ngFor="let file of files" (click)="open(file)"
+        [disabled]="busyName === file.name" [attr.aria-label]="'Abrir PDF ' + file.name">
+        <img class="pdf-icon" slot="start" src="assets/imgs/pdf.svg" alt="" aria-hidden="true">
+        <ion-label>
+          <h2>{{ file.name }}</h2>
+          <p>{{ file.modifiedAt | date:'dd/MM/yyyy HH:mm' }}</p>
+          <ion-note>Arquivo PDF · {{ (file.size / 1024) | number:'1.0-0' }} KB</ion-note>
+        </ion-label>
+        <ion-button slot="end" fill="clear" type="button"
+          [attr.aria-label]="isPremium ? 'Compartilhar relatório' : 'Recurso Premium'"
+          [disabled]="busyName === file.name" (click)="$event.stopPropagation(); share(file)">
+          <ion-icon slot="icon-only" [name]="isPremium ? 'share-social-outline' : 'lock-closed-outline'"></ion-icon>
+        </ion-button>
+        <ion-button slot="end" fill="clear" color="danger" type="button" aria-label="Excluir relatório"
+          (click)="$event.stopPropagation(); requestDelete(file)">
+          <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+        </ion-button>
+      </ion-item>
+    </ion-list>
+  </main>
+</ion-content>
+
+<ion-alert [isOpen]="paywallAlertOpen" [header]="paywallHeader" [message]="paywallMessage" [buttons]="paywallButtons"
+  (didDismiss)="paywallAlertOpen = false"></ion-alert>
+<ion-alert [isOpen]="deleteTarget !== null" header="Excluir relatório"
+  message="Esta ação não pode ser desfeita. Deseja continuar?" [buttons]="deleteButtons"
+  (didDismiss)="deleteTarget = null"></ion-alert>
+<ion-toast [isOpen]="infoMessageVisible" [message]="infoMessage" color="success" [duration]="2600"
+  (didDismiss)="infoMessageVisible = false"></ion-toast>
+<ion-toast [isOpen]="errorMessageVisible" [message]="errorMessage" color="danger" [duration]="3200"
+  (didDismiss)="errorMessageVisible = false"></ion-toast>

@@ -1,0 +1,29 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start"><ion-back-button defaultHref="/home"></ion-back-button></ion-buttons>
+    <ion-title>Configurações</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <main class="settings-page">
+    <p class="eyebrow">Preferências</p>
+    <h1>Configurações</h1>
+
+    <p>Edição de portfólio. Recursos demonstrativos, sem compras.</p>
+
+    <ion-list inset="true">
+      <ion-item>
+        <ion-label>
+          <h2>Compartilhamento automático</h2>
+          <p>Permite preparar o resultado para compartilhamento após um cálculo.</p>
+        </ion-label>
+        <ion-toggle slot="end" [checked]="autoShare" (ionChange)="updateAutoShare($event)"></ion-toggle>
+      </ion-item>
+    </ion-list>
+  </main>
+  <ion-toast [isOpen]="savedMessageVisible" message="Preferência salva." [duration]="1800"
+    (didDismiss)="savedMessageVisible = false"></ion-toast>
+  <ion-toast [isOpen]="infoMessageVisible" [message]="infoMessage" color="success" [duration]="2600"
+    (didDismiss)="infoMessageVisible = false"></ion-toast>
+</ion-content>

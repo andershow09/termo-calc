@@ -1,0 +1,45 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-button slot="start" fill="clear" type="button" aria-label="Voltar" (click)="goBack()">
+      <ion-icon slot="icon-only" name="arrow-back-outline"></ion-icon>
+    </ion-button>
+    <ion-title>Resultados salvos</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <main class="saved-page">
+    <p class="demo-notice" role="note"><strong>DEMONSTRAÇÃO</strong> · Valores fictícios e fixos, sem validade técnica.</p>
+    <section class="page-intro">
+      <p class="eyebrow">Histórico local</p>
+      <h1>Resultados salvos</h1>
+      <p>As simulações ficam armazenadas neste dispositivo.</p>
+    </section>
+
+    <div class="empty-state" *ngIf="calculations.length === 0">
+      <ion-icon name="calculator-outline"></ion-icon>
+      <h2>Nenhum resultado salvo</h2>
+      <p>Depois de calcular, salve uma simulação para consultá-la aqui.</p>
+    </div>
+
+    <ion-list *ngIf="calculations.length > 0" lines="full">
+      <ion-item *ngFor="let calculation of calculations" button detail="true" (click)="openCalculation(calculation)">
+        <ion-icon slot="start" name="calculator-outline"></ion-icon>
+        <ion-label>
+          <h2>{{ calculation.title }}</h2>
+          <p>{{ calculation.createdAt | date:'dd/MM/yyyy HH:mm' }}</p>
+          <ion-note>{{ calculation.fluxoCalorKw | number:'1.2-2' }} kW · {{ calculation.custoAno |
+            currency:'BRL':'symbol':'1.2-2' }}/ano</ion-note>
+        </ion-label>
+        <ion-button slot="end" fill="clear" color="danger" type="button" aria-label="Excluir resultado"
+          (click)="$event.stopPropagation(); confirmDelete(calculation)">
+          <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+        </ion-button>
+      </ion-item>
+    </ion-list>
+  </main>
+
+  <ion-alert [isOpen]="deleteAlertOpen" header="Excluir resultado?"
+    message="Esta simulação será removida deste dispositivo." [buttons]="deleteAlertButtons"
+    (didDismiss)="deleteAlertOpen = false"></ion-alert>
+</ion-content>
