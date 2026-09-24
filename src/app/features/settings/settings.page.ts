@@ -26,7 +26,7 @@ import { PremiumProduct } from '../../shared/models/entitlement.model';
   templateUrl: './settings.page.html',
   styleUrls: ['./settings.page.scss'],
   imports: [
-    IonBackButton,
+IonBackButton,
     IonButtons,
     IonContent,
     IonHeader,

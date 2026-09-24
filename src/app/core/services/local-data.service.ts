@@ -1,11 +1,11 @@
-import { Injectable } from '@angular/core';
-import { Preferences } from '@capacitor/preferences';
+import { Injectable, inject } from '@angular/core';
 
 import { InputCalc, ResultCalc } from '../../shared/models/fluxo-ar.model';
 import {
   SavedCalculation,
   UserPreferences,
 } from '../../shared/models/saved-calculation.model';
+import { APP_PREFERENCES } from '../tokens/capacitor-tokens';
 
 const SAVED_CALCULATIONS_KEY = 'termocalc-portfolio.saved-calculations';
 const USER_PREFERENCES_KEY = 'termocalc-portfolio.user-preferences';
@@ -13,8 +13,10 @@ const DEFAULT_PREFERENCES: UserPreferences = { autoShare: true };
 
 @Injectable({ providedIn: 'root' })
 export class LocalDataService {
+  private readonly preferences = inject(APP_PREFERENCES);
+
   async getCalculations(): Promise<SavedCalculation[]> {
-    const stored = await Preferences.get({ key: SAVED_CALCULATIONS_KEY });
+    const stored = await this.preferences.get({ key: SAVED_CALCULATIONS_KEY });
     if (!stored.value) {
       return [];
     }
@@ -39,7 +41,7 @@ export class LocalDataService {
       createdAt: new Date().toISOString(),
     };
     const calculations = await this.getCalculations();
-    await Preferences.set({
+    await this.preferences.set({
       key: SAVED_CALCULATIONS_KEY,
       value: JSON.stringify([calculation, ...calculations]),
     });
@@ -48,7 +50,7 @@ export class LocalDataService {
 
   async deleteCalculation(id: string): Promise<void> {
     const calculations = await this.getCalculations();
-    await Preferences.set({
+    await this.preferences.set({
       key: SAVED_CALCULATIONS_KEY,
       value: JSON.stringify(calculations.filter((item) => item.id !== id)),
     });
@@ -60,7 +62,7 @@ export class LocalDataService {
   }
 
   async getPreferences(): Promise<UserPreferences> {
-    const stored = await Preferences.get({ key: USER_PREFERENCES_KEY });
+    const stored = await this.preferences.get({ key: USER_PREFERENCES_KEY });
     if (!stored.value) {
       return { ...DEFAULT_PREFERENCES };
     }
@@ -73,7 +75,7 @@ export class LocalDataService {
   }
 
   async savePreferences(preferences: UserPreferences): Promise<void> {
-    await Preferences.set({
+    await this.preferences.set({
       key: USER_PREFERENCES_KEY,
       value: JSON.stringify(preferences),
     });

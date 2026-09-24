@@ -30,7 +30,7 @@ import { LocalDataService } from '../../core/services/local-data.service';
   templateUrl: './saved-results.page.html',
   styleUrls: ['./saved-results.page.scss'],
   imports: [
-    CommonModule,
+CommonModule,
     IonAlert,
     IonButton,
     IonContent,
