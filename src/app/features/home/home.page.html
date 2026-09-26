@@ -215,30 +215,30 @@
       </ion-card>
     </form>
   </main>
-</ion-content>
+  </ion-content>
 
-<ion-toast [isOpen]="menuMessageVisible" [message]="menuMessage" [duration]="2600"
-  (didDismiss)="menuMessageVisible = false"></ion-toast>
+  <ion-toast [isOpen]="menuMessageVisible" [message]="menuMessage" [duration]="2600"
+    (didDismiss)="menuMessageVisible = false"></ion-toast>
 
-<ion-modal class="hint-modal" [isOpen]="activeHint !== null" (didDismiss)="closeHint()" aria-label="Ajuda do campo">
-  <ng-template>
-    <ion-header class="hint-modal-header">
-      <ion-toolbar>
-        <ion-title>Dicas de uso</ion-title>
-        <ion-icon slot="end" name="bulb-outline" aria-hidden="true"></ion-icon>
-      </ion-toolbar>
-    </ion-header>
-    <ion-content class="hint-modal-content" *ngIf="activeFieldHint as hint">
-      <div class="hint-modal-body">
-        <h1>{{ hint.title }}</h1>
-        <h3>{{ hint.unit }}</h3>
-        <p>{{ hint.description }}</p>
-        <p>{{ hint.guidance }}</p>
-        <p class="hint-modal__example"><strong>{{ hint.example }}</strong></p>
-      </div>
-    </ion-content>
-    <ion-footer class="hint-modal-footer">
-      <ion-button expand="block" color="success" type="button" (click)="closeHint()">OK</ion-button>
-    </ion-footer>
-  </ng-template>
-</ion-modal>
+  <ion-modal class="hint-modal" [isOpen]="activeHint !== null" (didDismiss)="closeHint()" aria-label="Ajuda do campo">
+    <ng-template>
+      <ion-header class="hint-modal-header">
+        <ion-toolbar>
+          <ion-title>Dicas de uso</ion-title>
+          <ion-icon slot="end" name="bulb-outline" aria-hidden="true"></ion-icon>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="hint-modal-content" *ngIf="activeFieldHint as hint">
+        <div class="hint-modal-body">
+          <h1>{{ hint.title }}</h1>
+          <h3>{{ hint.unit }}</h3>
+          <p>{{ hint.description }}</p>
+          <p>{{ hint.guidance }}</p>
+          <p class="hint-modal__example"><strong>{{ hint.example }}</strong></p>
+        </div>
+      </ion-content>
+      <ion-footer class="hint-modal-footer">
+        <ion-button expand="block" color="success" type="button" (click)="closeHint()">OK</ion-button>
+      </ion-footer>
+    </ng-template>
+  </ion-modal>
