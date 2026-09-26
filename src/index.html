@@ -21,12 +21,11 @@
 
   <style>
     /*
-      Fundo branco imediato evita o flash preto do WebView (antes de o CSS pintar)
-      na transição da splash nativa para o loader.
+      Fundo na cor da marca evita flash visual na transição da splash nativa para o loader.
     */
     html,
     body {
-      background-color: #ffffff;
+      background-color: #173b3a;
     }
 
     /*
@@ -43,7 +42,7 @@
       align-items: center;
       justify-content: center;
       gap: 24px;
-      background: #ffffff;
+      background: #173b3a;
     }
 
     #boot-loader.boot-loader--hidden {
@@ -59,8 +58,8 @@
     .boot-loader__spinner {
       width: 40px;
       height: 40px;
-      border: 4px solid rgba(106, 0, 128, 0.15);
-      border-top-color: #6a0080;
+      border: 4px solid rgba(20, 125, 114, 0.25);
+      border-top-color: #147d72;
       border-radius: 50%;
       animation: boot-loader-spin 0.8s linear infinite;
     }
@@ -75,7 +74,7 @@
 
 <body>
   <div id="boot-loader" aria-hidden="true">
-    <img class="boot-loader__logo" src="assets/imgs/splash-logo.png" alt="" />
+    <img class="boot-loader__logo" src="assets/imgs/splash-circle.png" alt="" />
     <div class="boot-loader__spinner"></div>
   </div>
   <app-root></app-root>
