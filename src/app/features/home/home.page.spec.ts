@@ -41,11 +41,11 @@ describe('HomePage', () => {
     expect(component).toBeTruthy();
   });
 
-  it('initializes form with empty values and altitude from location', () => {
+  it('initializes form with empty values and altitude from location', async () => {
+    await fixture.whenStable();
     expect(component.form.valid).toBeFalse();
     expect(component.form.controls.temperaturaInf.value).toBeNull();
     expect(component.form.controls.altitude.value).toBe(750);
-  });
 
   it('populates form from calculation session if available on init', () => {
     sessionSpy.getInput.and.returnValue(DEFAULT_INPUT_CALC);
