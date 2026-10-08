@@ -28,6 +28,7 @@ import {
   calculatorOutline,
   closeCircleOutline,
   flameOutline,
+  flaskOutline,
   helpCircleOutline,
   bulbOutline,
   locationOutline,
@@ -44,6 +45,7 @@ import {
   waterOutline,
 } from 'ionicons/icons';
 
+import { environment } from '../../../environments/environment';
 import {
   DEFAULT_INPUT_CALC,
   InputCalc,
@@ -103,47 +105,39 @@ export class HomePage {
   private readonly deviceLocationService = inject(DeviceLocationService);
   private readonly router = inject(Router);
 
+  readonly isDev = !environment.production;
+
   // Somente a altitude é preenchida automaticamente (via localização); os demais
   // campos ficam em branco para preenchimento manual. Os valores de
   // DEFAULT_INPUT_CALC ficam comentados abaixo para reativação em testes futuros.
   readonly form = this.formBuilder.group({
-    // temperaturaInf: DEFAULT_INPUT_CALC.temperaturaInf,
     temperaturaInf: [null as number | null, Validators.required],
-    // umidadeInf: DEFAULT_INPUT_CALC.umidadeInf,
     umidadeInf: [
       null as number | null,
       [Validators.required, Validators.min(0), Validators.max(100)],
     ],
-    // temperaturaRef: DEFAULT_INPUT_CALC.temperaturaRef,
     temperaturaRef: [null as number | null, Validators.required],
-    // umidadeRef: DEFAULT_INPUT_CALC.umidadeRef,
     umidadeRef: [
       null as number | null,
       [Validators.required, Validators.min(0), Validators.max(100)],
     ],
-    // larguraAbert: DEFAULT_INPUT_CALC.larguraAbert,
     larguraAbert: [
       null as number | null,
       [Validators.required, Validators.min(0.01)],
     ],
-    // alturaAbert: DEFAULT_INPUT_CALC.alturaAbert,
     alturaAbert: [
       null as number | null,
       [Validators.required, Validators.min(0.01)],
     ],
-    // tempoAbert: DEFAULT_INPUT_CALC.tempoAbert,
     tempoAbert: [
       null as number | null,
       [Validators.required, Validators.min(1), Validators.max(60)],
     ],
-    // cop: DEFAULT_INPUT_CALC.cop,
     cop: [
       null as number | null,
       [Validators.required, Validators.min(0.01), Validators.max(7)],
     ],
-    // custoKw: DEFAULT_INPUT_CALC.custoKw,
     custoKw: [null as number | null, [Validators.required, Validators.min(0)]],
-    // eficienciaCort: DEFAULT_INPUT_CALC.eficienciaCort,
     eficienciaCort: [
       null as number | null,
       [Validators.required, Validators.min(0), Validators.max(100)],
@@ -175,14 +169,13 @@ export class HomePage {
     const savedInput = this.calculationSession.getInput();
     if (savedInput) {
       this.form.patchValue(savedInput);
-    } else {
-      this.form.patchValue(DEFAULT_INPUT_CALC);
     }
 
     addIcons({
       calculatorOutline,
       closeCircleOutline,
       flameOutline,
+      flaskOutline,
       helpCircleOutline,
       bulbOutline,
       locationOutline,
@@ -199,6 +192,10 @@ export class HomePage {
       waterOutline,
     });
     void this.loadAltitude();
+  }
+
+  fillSampleData(): void {
+    this.form.patchValue(DEFAULT_INPUT_CALC);
   }
 
   toggleHint(field: FieldKey): void {
@@ -256,7 +253,6 @@ export class HomePage {
   }
 
   reset(): void {
-    // this.form.reset(DEFAULT_INPUT_CALC); // TODO(testes futuros): repreencher todos os campos com os padrões
     this.form.reset({ altitude: DEFAULT_INPUT_CALC.altitude });
     this.calculationSession.clear();
   }

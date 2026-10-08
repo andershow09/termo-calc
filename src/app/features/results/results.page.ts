@@ -15,7 +15,7 @@ import {
   IonHeader,
   IonIcon,
   IonAlert,
-  IonTitle,
+IonTitle,
   IonToast,
   IonToolbar,
 } from '@ionic/angular/standalone';
@@ -48,7 +48,7 @@ import { OptionsMenuComponent } from '../../shared/components/options-menu/optio
   styleUrls: ['./results.page.scss'],
   imports: [
     CommonModule,
-    IonButton,
+IonButton,
     IonButtons,
     IonCard,
     IonCardContent,
